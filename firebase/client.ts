@@ -4,13 +4,13 @@ import {getFirestore} from 'firebase/firestore';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyALfHm0ylf6V-4g0XDCNeiFAu2jLEYyYPY",
-  authDomain: "prepwise-f0501.firebaseapp.com",
-  projectId: "prepwise-f0501",
-  storageBucket: "prepwise-f0501.firebasestorage.app",
-  messagingSenderId: "665787680717",
-  appId: "1:665787680717:web:765441f05ce4cc8dae2684",
-  measurementId: "G-373ECNHVR1"
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: ""
 };
 
 
