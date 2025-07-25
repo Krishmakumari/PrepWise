@@ -132,62 +132,33 @@ export async function isAuthenticated() {
 }
 
 
-export async function getInterviewByUserId(userId: string): Promise<Interview[] | null>{
-  const interviews = await db
-  .collection('interviews')
-  .where('userId','==',userId)
-  .orderBy('createdAt','desc')
-  .get();
+// export async function getInterviewByUserId(userId: string): Promise<Interview[] | null>{
+//   const interviews = await db
+//   .collection('interviews')
+//   .where('userId','==',userId)
+//   .orderBy('createdAt','desc')
+//   .get();
 
-  return interviews.docs.map((doc)=>({
-    id: doc.id,
-    ... doc.data()
-  })) as Interview[];
-}
+//   return interviews.docs.map((doc)=>({
+//     id: doc.id,
+//     ... doc.data()
+//   })) as Interview[];
+// }
 
-export async function getLatestInterviews(params: GetLatestInterviewsParams): Promise<Interview[]> {
-  const { userId, limit = 20 } = params;
+// export async function getLatestInterviews(params: GetLatestInterviewsParams): Promise<Interview[]> {
+//   const { userId, limit = 20 } = params;
 
-  const interviews = await db
-        .collection("interviews")
-        .where("finalized", "==", true)
-        .where("userId", "!=", userId)
-        .orderBy("userId")           
-        .orderBy("createdAt", "desc")
-        .limit(limit)
-        .get();    
+//   const interviews = await db
+//         .collection("interviews")
+//         .where("finalized", "==", true)
+//         .where("userId", "!=", userId)
+//         .orderBy("userId")           
+//         .orderBy("createdAt", "desc")
+//         .limit(limit)
+//         .get();    
 
-  return interviews.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data()
-  })) as Interview[];
-} 
-
-export async function changePassword(params: ChangePasswordParams) {
-  const { currentPassword, newPassword } = params;
-  
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return {
-        success: false,
-        message: "User not authenticated"
-      };
-    }
-
-    // Note: This is a server action, but password change requires client-side Firebase Auth
-    // The actual implementation should be done on the client side using Firebase Auth
-    // This is just a placeholder for the server action structure
-    
-    return {
-      success: true,
-      message: "Password changed successfully"
-    };
-  } catch (error: any) {
-    console.error("Error changing password:", error);
-    return {
-      success: false,
-      message: "Failed to change password. Please try again."
-    };
-  }
-}
+//   return interviews.docs.map((doc) => ({
+//     id: doc.id,
+//     ...doc.data()
+//   })) as Interview[];
+// } 
