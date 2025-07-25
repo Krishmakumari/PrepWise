@@ -97,3 +97,8 @@ interface InterviewFormProps {
 interface TechIconProps {
   techStack: string[];
 }
+
+interface ChangePasswordParams {
+  currentPassword: string;
+  newPassword: string;
+}

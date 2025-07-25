@@ -59,7 +59,10 @@ export async function createFeedback(params: CreateFeedbackParams) {
 
     await feedbackRef.set(feedback);
 
-    return { success: true, feedbackId: feedbackRef.id };
+    return { 
+      success: true,
+      feedbackId: feedbackRef.id
+     };
   } catch (error) {
     console.error("Error saving feedback:", error);
     return { success: false };
@@ -67,15 +70,27 @@ export async function createFeedback(params: CreateFeedbackParams) {
 }
 
 export async function getInterviewById(id: string): Promise<Interview | null> {
+  if (!id || id.trim() === "") {
+    return null;
+  }
+  
   const interview = await db.collection("interviews").doc(id).get();
+  if (interview.exists) {
+    return interview.data() as Interview;
+  }
 
-  return interview.data() as Interview | null;
+  return null;
 }
+
 
 export async function getFeedbackByInterviewId(
   params: GetFeedbackByInterviewIdParams
 ): Promise<Feedback | null> {
   const { interviewId, userId } = params;
+
+  if (!interviewId || !userId) {
+    return null;
+  }
 
   const querySnapshot = await db
     .collection("feedback")
@@ -115,6 +130,7 @@ export async function getInterviewsByUserId(
   const interviews = await db
     .collection("interviews")
     .where("userId", "==", userId)
+    .where("finalized", "==", true)
     .orderBy("createdAt", "desc")
     .get();
 
