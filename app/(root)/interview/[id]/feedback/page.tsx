@@ -41,7 +41,7 @@ const Page = async ({ params }: RouteParams) => {
   const user = await getCurrentUser();
   
   if (!user) {
-    redirect("/");
+    redirect("/"); 
   }
   
   const interview = await getInterviewById(interviewId);

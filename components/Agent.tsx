@@ -108,30 +108,35 @@ const Agent = ({
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
     
-    if (type === "generate") {
-      await vapi.start(
-        undefined,
-        undefined,
-        undefined,
-        process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-         variableValues: {
-           username: userName,
-           userid: userId,
+    try {
+      if (type === "generate") {
+        await vapi.start(
+          undefined,
+          undefined,
+          undefined,
+          process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+           variableValues: {
+             username: userName,
+             userid: userId,
+            }
           }
-        }
-      ); 
-    } else {
-       let formattedQuestions = "";
-       if (questions) {
-         formattedQuestions = questions
-          .map((question) => `- ${question}`)
-          .join("\n");
-        }
-        await vapi.start(interviewer, {
-          variableValues: {
-          questions: formattedQuestions,
-        },
-      });
+        ); 
+      } else {
+         let formattedQuestions = "";
+         if (questions) {
+           formattedQuestions = questions
+            .map((question) => `- ${question}`)
+            .join("\n");
+          }
+          await vapi.start(interviewer, {
+            variableValues: {
+            questions: formattedQuestions,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Failed to start call:", error);
+      setCallStatus(CallStatus.INACTIVE);
     }
   };
 
@@ -193,8 +198,11 @@ const Agent = ({
 
       <div className="flex w-full justify-center">
         {callStatus !== CallStatus.ACTIVE ? (
-          <button className="relative btn-call"
-                  onClick={handleCall}>
+          <button 
+            className="relative btn-call"
+            onClick={handleCall}
+            disabled={callStatus === CallStatus.CONNECTING}
+          >
             <span
               className={cn(
                 "absolute animate-ping rounded-full opacity-75",
@@ -202,7 +210,7 @@ const Agent = ({
               )}
             />
             <span>
-              {isCallInactiveOrFinished ? "Call" : ". . ."}
+              {callStatus === CallStatus.CONNECTING ? "Connecting..." : "Call"}
             </span>
           </button>
         ) : (
@@ -212,6 +220,13 @@ const Agent = ({
           </button>
         )}
       </div>
+      
+      {callStatus === CallStatus.CONNECTING && (
+        <div className="flex flex-col items-center mt-4 text-light-100">
+          <p className="text-sm text-gray-400">Initializing AI interviewer...</p>
+          <p className="text-xs text-gray-500 mt-1">This may take a few seconds</p>
+        </div>
+      )}
     </>
   );
 };

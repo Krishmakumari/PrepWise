@@ -66,7 +66,7 @@ const ProfilePage = async () => {
         <h2 className="text-3xl font-bold">Your Interviews</h2>
         
         {hasInterviews ? (
-          <div className="space-y-4">
+          <div className="interviews-section">
             {userInterviews.map((interview) => (
               <InterviewCard
                 key={interview.id}

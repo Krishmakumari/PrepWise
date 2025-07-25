@@ -109,15 +109,15 @@ export const interviewer: CreateAssistantDTO = {
   voice: {
     provider: "11labs",
     voiceId: "sarah",
-    stability: 0.4,
-    similarityBoost: 0.8,
-    speed: 0.9,
-    style: 0.5,
-    useSpeakerBoost: true,
+    stability: 0.5,
+    similarityBoost: 0.7,
+    speed: 1.0,
+    style: 0.4,
+    useSpeakerBoost: false,
   },
   model: {
     provider: "openai",
-    model: "gpt-4",
+    model: "gpt-3.5-turbo",
     messages: [
       {
         role: "system",
