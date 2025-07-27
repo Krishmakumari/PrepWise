@@ -19,40 +19,40 @@ const ProfilePage = async () => {
   const hasInterviews = userInterviews && userInterviews.length > 0;
 
   return (
-    <div className="flex min-h-screen gap-8 text-light-100 py-8">
+    <div className="flex flex-col lg:flex-row min-h-screen gap-8 text-light-100 py-8 px-4 lg:px-8">
       {/* Left Side - Profile */}
-      <div className="flex flex-col gap-6 w-1/4 ml-8">
-        <h1 className="text-3xl font-bold">My Profile</h1>
+      <div className="flex flex-col gap-6 w-full lg:w-1/4">
+        <h1 className="text-2xl lg:text-3xl font-bold">My Profile</h1>
         
-        <div className="bg-dark-200 rounded-lg p-6 border border-gray-600">
-          <div className="flex flex-col items-center gap-4 mb-6">
+        <div className="bg-dark-200 rounded-lg p-4 lg:p-6 border border-gray-600">
+          <div className="flex flex-col items-center gap-3 lg:gap-4 mb-4 lg:mb-6">
             <Image 
               src="/profile.svg" 
               alt="user profile" 
-              width={80} 
-              height={80} 
-              className="rounded-full"
+              width={60} 
+              height={60} 
+              className="rounded-full lg:w-20 lg:h-20"
             />
-            <h2 className="text-2xl font-semibold text-center">{user.name}</h2>
-            <p className="text-gray-400 text-center">{user.email}</p>
+            <h2 className="text-xl lg:text-2xl font-semibold text-center break-words">{user.name}</h2>
+            <p className="text-gray-400 text-center text-sm lg:text-base break-all">{user.email}</p>
           </div>
           
-          <div className="border-t border-gray-500 my-4"></div>
+          <div className="border-t border-gray-500 my-3 lg:my-4"></div>
           
-          <div className="space-y-4">
-            <Link href="/interview" className="text-gray-400 text-center underline hover:text-gray-300 block">
+          <div className="space-y-3 lg:space-y-4">
+            <Link href="/interview" className="text-gray-400 text-center underline hover:text-gray-300 block text-sm lg:text-base">
               Create Your Interview
             </Link>
             
             <ChangePasswordDialog 
               trigger={
-                <button className="text-gray-400 text-center underline hover:text-gray-300 block w-full">
+                <button className="text-gray-400 text-center underline hover:text-gray-300 block w-full text-sm lg:text-base">
                   Change Your Password
                 </button>
               }
             />
             
-            <Button asChild className="w-full bg-dark-200 hover:text-dark-500 hover:bg-light-200 p-4 font-bold text-light-200 rounded-lg border-2 border-light-200">
+            <Button asChild className="w-full bg-dark-200 hover:text-dark-500 hover:bg-light-200 px-4 py-3 font-bold text-light-200 rounded-lg border-2 border-light-200">
               <Link href="/">Back to Dashboard</Link>
             </Button>
             
@@ -63,10 +63,10 @@ const ProfilePage = async () => {
 
       {/* Right Side - Interviews */}
       <div className="flex flex-col gap-6 flex-1">
-        <h2 className="text-3xl font-bold">Your Interviews</h2>
+        <h2 className="text-2xl lg:text-3xl font-bold">Your Interviews</h2>
         
         {hasInterviews ? (
-          <div className="interviews-section">
+          <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
             {userInterviews.map((interview) => (
               <InterviewCard
                 key={interview.id}
@@ -80,7 +80,7 @@ const ProfilePage = async () => {
             ))}
           </div>
         ) : (
-          <p className="text-gray-400">
+          <p className="text-gray-400 text-center lg:text-left">
             You haven't taken any interviews yet
           </p>
         )}
